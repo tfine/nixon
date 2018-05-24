@@ -1,0 +1,21 @@
+body {
+  padding-top: 20px;
+  padding-left: 200px;
+  padding-right: 200px;
+  font: 14px Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#title-top {
+  font: 22px Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+#search {
+  color: grey;
+  text-align: center;
+  font: 18px Helvetica, Arial, sans-serif;
+}

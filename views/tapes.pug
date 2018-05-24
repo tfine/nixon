@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  each tape in tapes
+    p Tape: #{tape.conversationCode}
+    p Start Date: #{tape.startDateTime}
+    p End Date: #{tape.endDateTime}
+    p Participants: #{tape.participants}
+    p Recording Device: #{tape.recordingDevice}
+    audio(controls)
+      source(src=`https://nixon.nyc3.digitaloceanspaces.com/audio/${tape.conversationCode}.mp3` type="audio/mp3")
+    p NARA Description:
+    p #{tape.description}
+    p Nixon Library Finding Aid:
+    pre !{tape.findingAid}
