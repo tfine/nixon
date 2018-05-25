@@ -8,9 +8,8 @@ block content
   p Recording Device: #{tape.recordingDevice}
   each file in tape.filename
     p: a(href=`https://nixon.nyc3.digitaloceanspaces.com/audio/${file}`) #{file}
-      = "            "
-      audio(controls)
-        source(src=`https://nixon.nyc3.digitaloceanspaces.com/audio/${file}` type="audio/mp3")
+    audio(controls)
+      source(src=`https://nixon.nyc3.digitaloceanspaces.com/audio/${file}` type="audio/mp3")
   p NARA Description:
   p #{tape.description}
   p Nixon Library Finding Aid:
