@@ -11,7 +11,8 @@ var Tape = mongoose.model("Tape", new Schema({
     description: String,
     findingAid: String,
     participants: String,
-    recordingDevice: String
+    recordingDevice: String,
+    filename: [String]
   }), 'withfindaid');
 
 module.exports = Tape;

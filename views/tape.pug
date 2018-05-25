@@ -6,8 +6,11 @@ block content
   p End Date: #{tape.endDateTimeMoment}
   p Participants: #{tape.participants}
   p Recording Device: #{tape.recordingDevice}
-  audio(controls)
-    source(src=`https://nixon.nyc3.digitaloceanspaces.com/audio/${tape.conversationCode}.mp3` type="audio/mp3")
+  each file in tape.filename
+    p: a(href=`https://nixon.nyc3.digitaloceanspaces.com/audio/${file}`) #{file}
+      = "            "
+      audio(controls)
+        source(src=`https://nixon.nyc3.digitaloceanspaces.com/audio/${file}` type="audio/mp3")
   p NARA Description:
   p #{tape.description}
   p Nixon Library Finding Aid:
