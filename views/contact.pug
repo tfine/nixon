@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  form(method='POST', action='https://formspree.io/tdfine@gmail.com')
+    h2 Message the developer, Todd Fine, through email at tdfine@gmail.com or by phone at +1 857-234-0920.
+    h2 You can also fill out this contact form:
+    input(type='email', name='email', placeholder='Your email')
+    br
+    textarea(name='message', placeholder='Your message', rows='8', cols='50')
+    br
+    button(type='submit') Send

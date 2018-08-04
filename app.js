@@ -10,6 +10,8 @@ require('dotenv').config()
 var indexRouter = require('./routes/index');
 var personsRouter = require('./routes/persons');
 var tapesRouter = require('./routes/tapes');
+// var aboutRouter = require('./routes/about');
+// var contactRouter = require('./routes/contact');
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+// app.use('/contact', contactRouter);
+// app.use('/about', aboutRouter);
 app.use('/tapes', tapesRouter);
 // Person Later
 // app.use('/person', personsRouter);

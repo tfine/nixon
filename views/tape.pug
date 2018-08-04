@@ -1,11 +1,19 @@
 extends layout
 
 block content
-  p Tape: #{tape.conversationCode}
+  p Conversation: #{tape.conversationCode}
   p Start Date: #{tape.startDateTimeMoment}
   p End Date: #{tape.endDateTimeMoment}
-  p Participants: #{tape.participants}
+  p Participants:
+  each participant in tape.participantsList
+    if participant != ""
+      a(href=`/tapes/?name_field=${participant}`) #{participant}
+      span ;&nbsp
   p Recording Device: #{tape.recordingDevice}
+  if tape.tapeStart
+    p Full Tape Conversation Start Time: #{tape.tapeStart}
+  if tape.tapeEnd
+    p Full Tape Conversation End Time: #{tape.tapeEnd}
   each file in tape.filename
     p: a(href=`https://nixon.nyc3.digitaloceanspaces.com/audio/${file}`) #{file}
     audio(controls)

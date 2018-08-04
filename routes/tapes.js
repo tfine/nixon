@@ -55,6 +55,25 @@ router.get('/', function(req, res, next) {
     });
   }
 
+  else if (req.query.name_field) {
+    console.log(req.query.name_field);
+    TapeService.namesearch(req.query.name_field)
+    .then((tapes) => {
+      console.log("tapes downloaded");
+      if (tapes.length == 0) {
+        res.send("NO RESULTS");
+        res.end();
+        return;
+      }
+      res.render('shorttapes', {tapes: tapes});
+      return;
+    }).catch((err) => {
+      res.render('error');
+      res.end();
+      return;
+    });
+  }
+
   else {
   TapeService.listall()
     .then((tapes) => {

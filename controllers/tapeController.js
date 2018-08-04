@@ -21,7 +21,14 @@ class TapeService {
     }
 
     static textsearch(text) {
-        return Tape.find({$text: {$search: text}}).sort({startDateTime: 1}).limit(250)
+        return Tape.find({$text: {$search: text}}).sort({startDateTime: 1}).limit(1000)
+            .then((tapes) => {
+                return tapes;
+            });
+    }
+
+    static namesearch(name) {
+        return Tape.find({participantsList: name}).sort({startDateTime: 1}).limit(1000)
             .then((tapes) => {
                 return tapes;
             });

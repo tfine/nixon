@@ -12,7 +12,10 @@ var Tape = mongoose.model("Tape", new Schema({
     findingAid: String,
     participants: String,
     recordingDevice: String,
-    filename: [String]
+    filename: [String],
+    participantsList: [String],
+    tapeStart: String,
+    tapeEnd: String
   }), 'withfindaid');
 
 module.exports = Tape;

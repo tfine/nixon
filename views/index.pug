@@ -2,11 +2,16 @@ extends layout
 
 block content
   div(id="search")
-    h2 Search by Text
+    h2 Search by Text and Participant
     form(action="/tapes/")
       input(type="text", name="search_field")
       input(type="submit")
-    h2 Search by Date
+    h2 Select Frequent Participant
+    form(action="/tapes/")
+      include option.html
+      input(type="submit" value="Submit")
+
+    h2 Select Date Range
     input(type="text", name="daterange", value="04/07/1971 - 06/15/1973", size="30")
     script.
       $('input[name="daterange"]').daterangepicker({
@@ -23,5 +28,4 @@ block content
 
         });
     br
-    br
-    img(src="/images/Tape_recorder.jpg")
+  
