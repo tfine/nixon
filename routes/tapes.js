@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 
+var title = "";
+
 var tapeController = require('../controllers/tapeController');
 
 const TapeService = tapeController.TapeService;
@@ -115,7 +117,7 @@ router.get('/:tape-:convo', function(req, res, next) {
             var realso = /See also Conversation No. (\d*-\d*)/g;
             tape["findingAid"] = tape["findingAid"].replace(re, '<a href="/tapes/$1">See Conversation No. $1</a>');
             tape["findingAid"] = tape["findingAid"].replace(realso, '<a href="/tapes/$1">See also Conversation No. $1</a>');
-            res.render('tape', {tape: tape});
+            res.render('tape', {tape: tape, title: tape["conversationCode"]});
         }).catch((err) => {
             res.render('error');
             res.end();
