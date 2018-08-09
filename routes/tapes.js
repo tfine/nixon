@@ -6,6 +6,15 @@ var tapeController = require('../controllers/tapeController');
 
 const TapeService = tapeController.TapeService;
 
+
+// padzero if doesn't match
+function padzero(item){
+  item = ("000" + item).substr(-3,3);
+  console.log(item);
+  return item;
+}
+
+
 router.get('/long', function(req, res, next) {
   TapeService.list()
     .then((tapes) => {
@@ -75,7 +84,7 @@ router.get('/', function(req, res, next) {
   }
 
   else if (req.query.conversationnum) {
-    tapenum = "/tapes/" + req.query.tapenum + "-" + req.query.conversationnum
+    tapenum = "/tapes/" + padzero(req.query.tapenum) + "-" + padzero(req.query.conversationnum)
     res.redirect(tapenum)
   }
 
@@ -90,13 +99,6 @@ router.get('/', function(req, res, next) {
     });
   }
 });
-
-// padzero if doesn't match
-function padzero(item){
-  item = ("000" + item).substr(-3,3);
-  console.log(item);
-  return item;
-}
 
 /* GET users listing. */
 router.get('/:tape-:convo', function(req, res, next) {
