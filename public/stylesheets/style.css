@@ -20,6 +20,12 @@ a {
   font: 18px Helvetica, Arial, sans-serif;
 }
 
+#list {
+  color: grey;
+  text-align: left;
+  font: 18px Helvetica, Arial, sans-serif;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;

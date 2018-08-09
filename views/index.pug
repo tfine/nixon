@@ -2,7 +2,7 @@ extends layout
 
 block content
   div(id="search")
-    h1 Easy Access to the 22,723 Conversations from all 949 Published Nixon Tapes.
+    h1 Easy Access to the 22,723 Conversations from All 949 Nixon White House Tapes.
     h2 Search by Text and Participant
     form(action="/tapes/")
       input(type="text", name="search_field")
@@ -37,5 +37,7 @@ block content
       input(type="number" name="conversationnum" min="1" max="250")
       | &nbsp
       input(type="submit")
+
+    h2 #[a(href="/all") List of all Conversations and Tapes]
 
     br
