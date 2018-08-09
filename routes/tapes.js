@@ -74,8 +74,13 @@ router.get('/', function(req, res, next) {
     });
   }
 
+  else if (req.query.conversationnum) {
+    tapenum = "/tapes/" + req.query.tapenum + "-" + req.query.conversationnum
+    res.redirect(tapenum)
+  }
+
   else {
-  TapeService.listall()
+  TapeService.listall(req.query.tapenum, req.query.conversationnum)
     .then((tapes) => {
       console.log("tapes downloaded");
       res.render('shorttapes', {tapes: tapes});

@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var Tape = mongoose.model("Tape", new Schema({
     conversationCode: String,
-    tapeNumber: String,
-    conversationNumber: String,
+    tapeNumber: Number,
+    conversationNumber: Number,
     startDateTime: Date,
     endDateTime: Date,
     description: String,
@@ -15,7 +15,9 @@ var Tape = mongoose.model("Tape", new Schema({
     filename: [String],
     participantsList: [String],
     tapeStart: String,
-    tapeEnd: String
+    tapeEnd: String,
+    nextCode: String,
+    prevCode: String
   }), 'withfindaid');
 
 module.exports = Tape;

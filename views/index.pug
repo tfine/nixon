@@ -12,7 +12,7 @@ block content
       input(type="submit" value="Submit")
 
     h2 Select Date Range
-    input(type="text", name="daterange", value="04/07/1971 - 06/15/1973", size="30")
+    input(type="text", name="daterange", value="01/01/1971 - 12/31/1973", size="30")
     script.
       $('input[name="daterange"]').daterangepicker({
         opens: 'center'
@@ -27,5 +27,14 @@ block content
           window.location.replace("/tapes/?" + queryString);
 
         });
+    h2 Select Specific Tape and/or Conversation
+    form(action="/tapes/")
+      p
+      | Tape:
+      input(type="number" name="tapenum" min="1" max="949")
+      | &nbspConversation:
+      input(type="number" name="conversationnum" min="1" max="250")
+      | &nbsp
+      input(type="submit")
+
     br
-  

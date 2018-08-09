@@ -2,6 +2,10 @@ extends layout
 
 block content
   p Conversation: #{tape.conversationCode}
+  | Prev:&nbsp
+  a(href=`/tapes/${tape.prevCode}`) #{tape.prevCode}
+  |  Next:&nbsp
+  a(href=`/tapes/${tape.nextCode}`) #{tape.nextCode}
   p Start Date: #{tape.startDateTimeMoment}
   p End Date: #{tape.endDateTimeMoment}
   p Participants:

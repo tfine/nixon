@@ -34,8 +34,9 @@ class TapeService {
             });
     }
 
-    static listall() {
-        return Tape.find({}).sort({startDateTime: 1}).limit(20)
+    static listall(tapenum) {
+        tapenum = parseInt(tapenum);
+        return Tape.find({"tapeNumber": tapenum}).sort({startDateTime: 1}).limit(500)
             .then((tapes) => {
                 return tapes;
             });
