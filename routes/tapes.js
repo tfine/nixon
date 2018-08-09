@@ -112,7 +112,9 @@ router.get('/:tape-:convo', function(req, res, next) {
             tape["startDateTimeMoment"] = moment(tape.startDateTime).format("LLLL");
             tape["endDateTimeMoment"] = moment(tape.endDateTime).format("LLLL");
             var re = /See Conversation No. (\d*-\d*)/g;
+            var realso = /See also Conversation No. (\d*-\d*)/g;
             tape["findingAid"] = tape["findingAid"].replace(re, '<a href="/tapes/$1">See Conversation No. $1</a>');
+            tape["findingAid"] = tape["findingAid"].replace(realso, '<a href="/tapes/$1">See also Conversation No. $1</a>');
             res.render('tape', {tape: tape});
         }).catch((err) => {
             res.render('error');
