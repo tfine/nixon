@@ -53,8 +53,8 @@ router.get('/', function(req, res, next) {
     .then((tapes) => {
       console.log("tapes downloaded");
       if (tapes.length == 0) {
-        res.send("NO RESULTS");
-        res.end();
+        res.render('page', {message: "No results."});
+        res.end()
         return;
       }
       res.render('shorttapes', {tapes: tapes});
