@@ -19,8 +19,7 @@ function padzero(item){
 
 router.get('/long', function(req, res, next) {
   TapeService.list()
-    .then((tapes) => {
-      console.log("tapes downloaded");
+    .then((tapes) => {s
       res.render('tapes', {tapes: tapes});
     }).catch((err) => {
       res.render('error');
@@ -37,7 +36,6 @@ router.get('/', function(req, res, next) {
     console.log(start);
     TapeService.listrange(start, end)
     .then((tapes) => {
-      console.log("tapes downloaded");
         res.render('shorttapes', {tapes: tapes});
       return;
     }).catch((err) => {
@@ -51,7 +49,6 @@ router.get('/', function(req, res, next) {
     console.log(req.query.search_field);
     TapeService.textsearch(req.query.search_field)
     .then((tapes) => {
-      console.log("tapes downloaded");
       if (tapes.length == 0) {
         res.render('page', {message: "No results."});
         res.end()
@@ -70,7 +67,6 @@ router.get('/', function(req, res, next) {
     console.log(req.query.name_field);
     TapeService.namesearch(req.query.name_field)
     .then((tapes) => {
-      console.log("tapes downloaded");
       if (tapes.length == 0) {
         res.send("NO RESULTS");
         res.end();
@@ -93,7 +89,6 @@ router.get('/', function(req, res, next) {
   else {
   TapeService.listall(req.query.tapenum, req.query.conversationnum)
     .then((tapes) => {
-      console.log("tapes downloaded");
       res.render('shorttapes', {tapes: tapes});
     }).catch((err) => {
       res.render('error');
@@ -106,7 +101,6 @@ router.get('/', function(req, res, next) {
 router.get('/:tape-:convo', function(req, res, next) {
   TapeService.read(padzero(req.params.tape) + "-" + padzero(req.params.convo))
       .then((tape) => {
-            console.log(`tape downloaded`);
             if (tape === null) {
               console.log("nothing");
               res.render('error');
