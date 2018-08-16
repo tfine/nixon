@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
     console.log(start);
     TapeService.listrange(start, end)
     .then((tapes) => {
-        res.render('shorttapes', {tapes: tapes});
+        res.render('shorttapes', {tapes: tapes, title: "Date Search"});
       return;
     }).catch((err) => {
       res.render('error');
@@ -54,7 +54,7 @@ router.get('/', function(req, res, next) {
         res.end()
         return;
       }
-      res.render('shorttapes', {tapes: tapes});
+      res.render('shorttapes', {tapes: tapes, title: "Text Search"});
       return;
     }).catch((err) => {
       res.render('error');
@@ -72,7 +72,7 @@ router.get('/', function(req, res, next) {
         res.end();
         return;
       }
-      res.render('shorttapes', {tapes: tapes});
+      res.render('shorttapes', {tapes: tapes, title: req.query.name_field});
       return;
     }).catch((err) => {
       res.render('error');
@@ -89,7 +89,7 @@ router.get('/', function(req, res, next) {
   else {
   TapeService.listall(req.query.tapenum, req.query.conversationnum)
     .then((tapes) => {
-      res.render('shorttapes', {tapes: tapes});
+      res.render('shorttapes', {tapes: tapes, title: "All Tapes"});
     }).catch((err) => {
       res.render('error');
       res.end();

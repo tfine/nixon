@@ -1,5 +1,8 @@
 extends layout
 
+block title
+  title #{title}: Easy Nixon Tapes Archive
+
 block content
   p #{tapes.length} Results
   each tape in tapes
