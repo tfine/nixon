@@ -9,6 +9,8 @@ block content
   a(href=`/tapes/${tape.prevCode}`) #{tape.prevCode}
   |  Next:&nbsp
   a(href=`/tapes/${tape.nextCode}`) #{tape.nextCode}
+  p Start Date: #{tape.startDateTimeMoment}
+  p End Date: #{tape.endDateTimeMoment}
   p Participants:
   each participant in tape.participantsList
     if participant != ""
