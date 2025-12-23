@@ -19,8 +19,9 @@ var mongoose = require('mongoose');
 
 const mongoDB = process.env.MONGODB_URI;
 
-mongoose.connect(mongoDB);
-
+mongoose.connect(process.env.MONGODB_URI, {
+  dbName: 'nixon-tapes'
+});
 
 mongoose.connection.on('connected', () => {
   console.log('MongoDB connected');
