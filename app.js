@@ -19,13 +19,13 @@ var mongoose = require('mongoose');
 
 const mongoDB = process.env.MONGODB_URI;
 
-mongoose.connect(mongoDB, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(mongoDB);
+
 
 mongoose.connection.on('connected', () => {
-  console.log('MongoDB connected to Atlas');
+  console.log('MongoDB connected');
+  console.log('DB name:', mongoose.connection.db.databaseName);
+  console.log('Tape collection:', mongoose.connection.collection('withfindaid').collectionName);
 });
 
 mongoose.connection.on('error', err => {

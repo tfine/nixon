@@ -14,7 +14,7 @@ block content
   p Participants:
   each participant in tape.participantsList
     if participant != ""
-      a(href=`/tapes/?name_field=${participant}`) #{participant}
+      a(href=`/tapes/?name_field=${encodeURIComponent(participant)}`) #{participant}
       span ;&nbsp
   p Recording Device: #{tape.recordingDevice}
   if tape.tapeStart

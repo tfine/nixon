@@ -2,120 +2,111 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 
-var title = "";
-
 var tapeController = require('../controllers/tapeController');
-
 const TapeService = tapeController.TapeService;
 
-
-// padzero if doesn't match
-function padzero(item){
-  item = ("000" + item).substr(-3,3);
-  console.log(item);
-  return item;
+/* Utility */
+function padzero(item) {
+  return ("000" + item).slice(-3);
 }
 
+/* =========================
+   LIST / SEARCH ROUTE
+   ========================= */
 
-router.get('/long', function(req, res, next) {
-  TapeService.list()
-    .then((tapes) => {s
-      res.render('tapes', {tapes: tapes});
-    }).catch((err) => {
-      res.render('error');
-      res.end();
-    });
-});
+router.get('/', function (req, res) {
 
-router.get('/', function(req, res, next) {
-
-  if (req.query.startDateTime) {
-    console.log("help");
-    start = moment(req.query.startDateTime).toDate();
-    end = moment(req.query.endDateTime).toDate();
-    console.log(start);
-    TapeService.listrange(start, end)
-    .then((tapes) => {
-        res.render('shorttapes', {tapes: tapes, title: "Date Search"});
-      return;
-    }).catch((err) => {
-      res.render('error');
-      res.end();
-      return;
-    });
-  }
-
-  else if (req.query.search_field) {
-    console.log(req.query.search_field);
-    TapeService.textsearch(req.query.search_field)
-    .then((tapes) => {
-      if (tapes.length == 0) {
-        res.render('page', {message: "No results."});
-        res.end()
-        return;
-      }
-      res.render('shorttapes', {tapes: tapes, title: "Text Search"});
-      return;
-    }).catch((err) => {
-      res.render('error');
-      res.end();
-      return;
-    });
-  }
-
-  else if (req.query.name_field) {
-    console.log(req.query.name_field);
-    TapeService.namesearch(req.query.name_field)
-    .then((tapes) => {
-      if (tapes.length == 0) {
-        res.send("NO RESULTS");
-        res.end();
-        return;
-      }
-      res.render('shorttapes', {tapes: tapes, title: req.query.name_field});
-      return;
-    }).catch((err) => {
-      res.render('error');
-      res.end();
-      return;
-    });
-  }
-
-  else if (req.query.conversationnum) {
-    tapenum = "/tapes/" + padzero(req.query.tapenum) + "-" + padzero(req.query.conversationnum)
-    res.redirect(tapenum)
-  }
-
-  else {
-  TapeService.listall(req.query.tapenum, req.query.conversationnum)
-    .then((tapes) => {
-      res.render('shorttapes', {tapes: tapes, title: "All Tapes"});
-    }).catch((err) => {
-      res.render('error');
-      res.end();
-    });
-  }
-});
-
-/* GET users listing. */
-router.get('/:tape-:convo', function(req, res, next) {
-  TapeService.read(padzero(req.params.tape) + "-" + padzero(req.params.convo))
-      .then((tape) => {
-            if (tape === null) {
-              console.log("nothing");
-              res.render('error');
-            }
-            tape["startDateTimeMoment"] = moment(tape.startDateTime).format("LLLL");
-            tape["endDateTimeMoment"] = moment(tape.endDateTime).format("LLLL");
-            var re = /See Conversation No. (\d*-\d*)/g;
-            var realso = /See also Conversation No. (\d*-\d*)/g;
-            tape["findingAid"] = tape["findingAid"].replace(re, '<a href="/tapes/$1">See Conversation No. $1</a>');
-            tape["findingAid"] = tape["findingAid"].replace(realso, '<a href="/tapes/$1">See also Conversation No. $1</a>');
-            res.render('tape', {tape: tape, title: tape["conversationCode"]});
-        }).catch((err) => {
-            res.render('error');
-            res.end();
+  /* Text search */
+  if (req.query.search_field) {
+    return TapeService.textsearch(req.query.search_field)
+      .then(tapes => {
+        if (!tapes.length) {
+          return res.render('page', { message: "No results." });
+        }
+        return res.render('shorttapes', {
+          tapes,
+          title: "Text Search"
         });
+      })
+      .catch(() => res.render('error'));
+  }
+
+  /* Participant search */
+  if (req.query.name_field) {
+    return TapeService.namesearch(req.query.name_field)
+      .then(tapes => {
+        if (!tapes.length) {
+          return res.render('page', { message: "No results." });
+        }
+        return res.render('shorttapes', {
+          tapes,
+          title: req.query.name_field
+        });
+      })
+      .catch(() => res.render('error'));
+  }
+
+  /* Default listing */
+  return TapeService.listall()
+    .then(tapes => {
+      return res.render('shorttapes', {
+        tapes,
+        title: "All Tapes"
+      });
+    })
+    .catch(() => res.render('error'));
+});
+
+/* =========================
+   DETAIL ROUTE
+   ========================= */
+
+router.get('/:code', function (req, res) {
+
+  const parts = req.params.code.split('-');
+  if (parts.length !== 2) {
+    return res.render('page', {
+      message: "That page or conversation code do not exist!"
+    });
+  }
+
+  const tape = padzero(parts[0]);
+  const convo = padzero(parts[1]);
+  const code = tape + "-" + convo;
+
+  TapeService.read(code)
+    .then(tapeDoc => {
+
+      if (!tapeDoc) {
+        return res.render('page', {
+          message: "That page or conversation code do not exist!"
+        });
+      }
+
+      tapeDoc.startDateTimeMoment =
+        moment(tapeDoc.startDateTime).format("LLLL");
+
+      tapeDoc.endDateTimeMoment =
+        moment(tapeDoc.endDateTime).format("LLLL");
+
+      if (tapeDoc.findingAid) {
+        tapeDoc.findingAid = tapeDoc.findingAid
+          .replace(
+            /See Conversation No. (\d*-\d*)/g,
+            '<a href="/tapes/$1">See Conversation No. $1</a>'
+          )
+          .replace(
+            /See also Conversation No. (\d*-\d*)/g,
+            '<a href="/tapes/$1">See also Conversation No. $1</a>'
+          );
+      }
+
+      return res.render('tape', {
+        tape: tapeDoc,
+        title: tapeDoc.conversationCode
+      });
+    })
+    .catch(() => res.render('error'));
 });
 
 module.exports = router;
