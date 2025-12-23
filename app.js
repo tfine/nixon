@@ -17,11 +17,21 @@ var app = express();
 
 var mongoose = require('mongoose');
 
-var mongoDB = `mongodb://${process.env.USERNAME}:${process.env.PW}@ds229290.mlab.com:29290/nixon-tapes`;
-// var mongoDB = `mongodb://localhost:27017/accounts`;
+const mongoDB = process.env.MONGODB_URI;
 
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
-mongoose.connect(mongoDB);
+mongoose.connection.on('connected', () => {
+  console.log('MongoDB connected to Atlas');
+});
+
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
+
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
