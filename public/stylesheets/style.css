@@ -5,6 +5,10 @@ body {
   font: 17px Helvetica, Arial, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   color: #00B7FF;
 }
@@ -48,4 +52,43 @@ a {
 .topnav a.active {
     background-color: #00B7FF;
     color: white;
+}
+
+audio {
+  width: 100%;
+  max-width: 640px;
+}
+
+@media (max-width: 900px) {
+  body {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding-left: 16px;
+    padding-right: 16px;
+    font: 16px Helvetica, Arial, sans-serif;
+  }
+
+  .topnav a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  #search input[type="text"],
+  #search input[type="number"] {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
 }

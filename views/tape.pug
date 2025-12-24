@@ -12,9 +12,9 @@ block content
   p Start Date: #{tape.startDateTimeMoment}
   p End Date: #{tape.endDateTimeMoment}
   p Participants:
-  each participant in tape.participantsList
-    if participant != ""
-      a(href=`/tapes/?name_field=${encodeURIComponent(participant)}`) #{participant}
+  each participant, index in tape.participantsListFiltered
+    a(href=`/tapes/?name_field=${encodeURIComponent(participant)}`) #{participant}
+    if index < tape.participantsListFiltered.length - 1
       span ;&nbsp
   p Recording Device: #{tape.recordingDevice}
   if tape.tapeStart

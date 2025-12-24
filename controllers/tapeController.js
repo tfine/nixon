@@ -46,6 +46,13 @@ class TapeService {
     static read(code) {
         return Tape.findOne({"conversationCode" : code})
             .then((tape) => {
+                if (tape && Array.isArray(tape.participantsList)) {
+                    tape.participantsListFiltered = tape.participantsList.filter((participant) => {
+                        return participant && participant.trim();
+                    });
+                } else if (tape) {
+                    tape.participantsListFiltered = [];
+                }
                 return tape;
             });
     }
